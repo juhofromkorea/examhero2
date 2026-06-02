@@ -2,12 +2,11 @@ package com.example.examhero.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.examhero.dto.SignupForm;
 import com.example.examhero.entity.User;
 import com.example.examhero.repository.UserRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -20,8 +19,8 @@ public class UserService {
     }
 
     @Transactional
-    public user register(SignupForm form) {
-        if (userRepository.existByEmail(form.getEmail())) {
+    public User register(SignupForm form) {
+        if (userRepository.existsByEmail(form.getEmail())) {
             throw new IllegalArgumentException("このメールアドレスは既に登録されています");
         }
 
@@ -33,7 +32,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public boolean existByEmail(String email){
-        return userRepository.existByEmail(email);
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
     }
 }

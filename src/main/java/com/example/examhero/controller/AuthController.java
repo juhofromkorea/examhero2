@@ -38,7 +38,7 @@ public class AuthController {
         }
 
         try {
-            //userService.register(signupForm);
+            userService.register(signupForm);
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
 
