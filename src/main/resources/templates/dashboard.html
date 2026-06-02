@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--
+    Thymeleaf を使うために xmlns:th を指定します。
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--
+        スマートフォンでも見やすくするための設定です。
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン-ExamHero</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <a th:href = "@{/}">ExamHero</a>
+    </header>
+    <main>ログイン成功</main>
+</body>
+</html>

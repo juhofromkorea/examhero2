@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+    Thymeleaf を使うために xmlns:th を指定します。
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--
+        スマートフォンでも見やすくするための設定です。
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン-ExamHero</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>ログイン</h1>
+    <form th:action = "@{/login}" method = "post">
+        <label for = "email">メールアドレス</label>
+        <input
+            type = "email"
+            id = "email"
+            name = "email"
+            placeholder = "例abc@example.com"
+            required
+        >
+        <label th:action = "@{/login}" method = "post">パスワード</label>
+        <input
+            type = "password"
+            id = "password"
+            name = "password"
+            placeholder = "パスワードを入力してください"
+            required
+        >
+        <button type = "submit">ログイン</button>
+    </form>
+    <p>
+        アカウントをお持ちでない方は
+        <a th:href = "@{/signup}">会員登録</a>
+    </p>
+    <p><a th:href ="@{/}">トップページへ戻る</a></p>
+</body>
+</html>
