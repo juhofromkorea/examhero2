@@ -9,13 +9,33 @@
         スマートフォンでも見やすくするための設定です。
     -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン-ExamHero</title>
+    <title>ダッシュボード-ExamHero</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <header>
         <a th:href = "@{/}">ExamHero</a>
+        <p th:text ="'ログイン中' + ${username}"></p>
+        <p>ログアウト</p>
     </header>
-    <main>ログイン成功</main>
+    <main>
+        <h1>ダッシュボード</h1>
+        <div>
+            <p>試験カテゴリ</p>
+        </div>
+
+        <div>
+            <p>問題カード</p>
+        </div>
+
+        <div>
+            <p>今日解いた問題</p>
+        </div>
+
+        <h2>学習カテゴリ</h2>
+        <a href = "@{/categories/list}">カテゴリ管理</a>
+        <a href = "@{/questions/form}">問題を登録</a>
+        <a href = "@{/categories/form}">カテゴリを作成する</a>
+    </main>
 </body>
 </html>

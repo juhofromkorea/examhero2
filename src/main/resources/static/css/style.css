@@ -1,0 +1,11 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;/* ブラウザの余白を消す */
+    font:Meirio;
+    color:#1f2937;
+    background:#f3f6fb;
+    line-height:1.7
+}
