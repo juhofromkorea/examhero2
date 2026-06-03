@@ -9,33 +9,53 @@
     <h1>ExamHero</h1>
     <h2>会員登録</h2>
 
-    <form th:action = "@{/signup}" method="post">
-        <label for = "username">ユーザー名</label>
+    <form th:action = "@{/signup}" th:object = "${signupForm}" method="post">
         <input
-            type = "text"
-            id = "username"
-            name = "username"
-            required
+            type = "hidden"
+            th:name = "${_csrf.parameterName}"
+            th:value = "${_csrf.token}"    
         >
-
-        <label for ="email">メールアドレス</label>
-        <input
-            type = "email"
-            id = "email"
-            name = "email"
-            placeholder = "abc@example.com"
-            required
-        >
-
-        <label for="password">パスワード</label>
-        <input
-            type = "password"
-            id = "password"
-            name = "password"
-            placeholder="パスワードを入力してください"
-            required
-        >
-        <button type = "submit">登録する</button>
+        <div>
+            <label for = "username">ユーザー名</label>
+            <input
+                type = "text"
+                th:field = "*{username}"
+                placeholder="田中太郎"
+                required
+            >
+            <p th:if = "${#fields.hasErrors(username)}" th:errors = "*{'username'}">
+                ユーザー名エラー
+            </p>
+        </div>
+    
+        <div>
+            <label for ="email">メールアドレス</label>
+            <input
+                type = "email"
+                th:field = "*{email}"
+                placeholder = "abc@example.com"
+                required
+            >
+            <p th:if = "${#fields.hasErrors(email)}" th:errors = "*{'email'}">
+                メールアドレスエラー
+            </p>
+        </div>
+        
+        <div>
+            <label for="password">パスワード</label>
+            <input
+                type = "password"
+                th:field = "*{password}"
+                placeholder="8文字以上で入力してください"
+                required
+            >
+            <p th:if = "${#fields.hasErrors(password)}" th:errors = "*{'password'}">
+                パスワードエラー
+            </p>
+        </div>
+        <button type = "submit">
+            登録する
+        </button>
     </form>
     <p>
         すでにアカウントはお持ちですか？
