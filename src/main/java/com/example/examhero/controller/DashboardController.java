@@ -14,7 +14,7 @@ import com.example.examhero.service.ExamCategoryService;
 @Controller
 public class DashboardController {
 
- private final ExamCategoryService examCategoryService;
+    private final ExamCategoryService examCategoryService;
 
     public DashboardController(ExamCategoryService examCategoryService) {
         this.examCategoryService = examCategoryService;
@@ -32,15 +32,8 @@ public class DashboardController {
         long categoryCount = examCategoryService.countCategoriesByUser(loginUser);
 
         model.addAttribute("loginEmail", loginEmail);
-
-        model.addAttribute("loginEmail", loginEmail);
         model.addAttribute("categories", categories);
         model.addAttribute("categoryCount", categoryCount);;
-
-
-
-
-
 
         return "dashboard";
     }
