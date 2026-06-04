@@ -14,25 +14,32 @@
 </head>
 <body>
     <header>
-        <a th:href = "@{/dashboard}">ExamHero</a>
-        <span>
-            ログイン中：
-            <strong th:text = "${loginEmail}"></strong>
-        </span>
+        <div class = "header-container">
+            <span class = "header-logo">
+                <a  th:href = "@{/}">ExamHero</a>
+            </span>
 
-        <form th:action = "@{/logout}" method = "post">
-            <input
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}"
-            >
-            <button type = "submit">
-                ログアウト
-            </button>
-        </form>
+            <span class="dash-header">ダッシュボード</span>
+
+            <form th:action = "@{/logout}" method = "post">
+                <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"
+                >
+                <button type = "submit" class="logoutbutton">
+                    ログアウト
+                </button>
+            </form>
     </header>
     <main>
-        <h1>ダッシュボード</h1>
+        <div class="toptitle">
+            <h1>
+                今やらなきゃいつやるの？
+                今っきゃない
+            </h1>
+        </div>
+
         <div>
             <p>試験カテゴリ</p>
         </div>
