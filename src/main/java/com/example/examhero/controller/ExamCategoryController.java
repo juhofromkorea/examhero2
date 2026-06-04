@@ -31,7 +31,7 @@ public class ExamCategoryController {
         this.examCategoryService = examCategoryService;
     }
 
-    @GetMapping("/category")
+    @GetMapping("/categories")
     public String ExamCategory( @AuthenticationPrincipal UserDetails userDetails,
             Model model, Principal principal){
 
@@ -44,10 +44,10 @@ public class ExamCategoryController {
         model.addAttribute("examCategoryForm", new ExamCategoryForm());
     
 
-        return "category/list";
+        return "categories/list";
     }
 
-    @GetMapping("/category/new")
+    @GetMapping("/categories/new")
     public String newform(Model model) {
 
         model.addAttribute("examCategoryForm", new ExamCategoryForm());
@@ -55,7 +55,7 @@ public class ExamCategoryController {
         return "categories/form";
     }
 
-    @PostMapping("/category")
+    @PostMapping("/categories")
     public String create(
         @Valid @ModelAttribute("examCategoryForm") ExamCategoryForm form,
         BindingResult bindingResult,
@@ -63,7 +63,7 @@ public class ExamCategoryController {
         RedirectAttributes redirectAttributes){
 
         if(bindingResult.hasErrors()){
-            return "category/form";
+            return "categories/form";
         }
 
         try{
@@ -71,7 +71,7 @@ public class ExamCategoryController {
 
             examCategoryService.createCategory(form, loginUser);    
             redirectAttributes.addFlashAttribute("successMessage", "カテゴリを作成しました");
-            return "redirect:/vategory";
+            return "redirect:/category";
 
         } catch (IllegalArgumentException e){
             bindingResult.reject("categoryError", e.getMessage());
