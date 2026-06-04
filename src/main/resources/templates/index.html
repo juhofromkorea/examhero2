@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+    Thymeleaf を使うために xmlns:th を指定します。
+    th:href などの Thymeleaf 属性を使えるようになります。
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <!--
+        スマートフォンでも見やすくするための設定です。
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ExamHero - 資格学習支援サービス</title>
+
+    <!--
+        共通CSSを読み込みます。
+        src/main/resources/static/css/style.css に対応します。
+    -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class = "header-container">
+            <span class = "header-logo">
+                <a  th:href = "@{/}">ExamHero</a>
+            </span>
+            
+            <span class = "header-link">
+                <a th:href = "@{/signup}">会員登録</a>
+                <a th:href = "@{/login}">ログインする</a>
+            </span>
+        </div>
+    </header>
+
+    <main>
+        <p class = "bold">
+            ExamHero<br>
+            自分だけの参考書を
+        </p>
+
+        <div class = "main-text">
+            <p>ExamHeroは、資格試験の問題を管理し、問題演習、復習を行うWebサービスです。</p>
+            <p>これさえあれば複数ある参考書をひとつにできる！</p>
+        </div>
+    </main>
+</body>
+</html>

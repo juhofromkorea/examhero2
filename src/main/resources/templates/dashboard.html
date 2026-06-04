@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+    Thymeleaf を使うために xmlns:th を指定します。
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--
+        スマートフォンでも見やすくするための設定です。
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダッシュボード-ExamHero</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class = "header-container">
+            <span class = "header-logo">
+                <a  th:href = "@{/}">ExamHero</a>
+            </span>
+
+            <span class="dash-header">ダッシュボード</span>
+
+            <form th:action = "@{/logout}" method = "post">
+                <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"
+                >
+                <button type = "submit" class="logoutbutton">
+                    ログアウト
+                </button>
+            </form>
+    </header>
+    <main>
+        <div class="toptitle">
+            <h1>
+                今やらなきゃいつやるの？
+                今っきゃない
+            </h1>
+        </div>
+
+        <div>
+            <p>試験カテゴリ</p>
+        </div>
+
+        <div>
+            <p>問題カード</p>
+        </div>
+
+        <div>
+            <p>今日解いた問題</p>
+        </div>
+
+        <h2>学習カテゴリ</h2>
+        <a href = "@{/categories/list}">カテゴリ管理</a>
+        <a href = "@{/questions/form}">問題を登録</a>
+        <a href = "@{/categories/form}">カテゴリを作成する</a>
+    </main>
+</body>
+</html>
