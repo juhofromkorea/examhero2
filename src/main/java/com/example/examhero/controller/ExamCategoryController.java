@@ -50,9 +50,9 @@ public class ExamCategoryController {
     @GetMapping("/category/new")
     public String newform(Model model) {
 
-    model.addAttribute("examCategoryForm", new ExamCategoryForm());
+        model.addAttribute("examCategoryForm", new ExamCategoryForm());
 
-    return "categories/form";
+        return "categories/form";
     }
 
     @PostMapping("/category")
@@ -73,8 +73,8 @@ public class ExamCategoryController {
             redirectAttributes.addFlashAttribute("successMessage", "カテゴリを作成しました");
             return "redirect:/vategory";
 
-    } catch (IllegalArgumentException e){
-         bindingResult.reject("categoryError", e.getMessage());
+        } catch (IllegalArgumentException e){
+            bindingResult.reject("categoryError", e.getMessage());
             return "categories/form";
         }
     }
