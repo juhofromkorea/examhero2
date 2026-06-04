@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+    Thymeleaf を使うために xmlns:th を指定します。
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--
+        スマートフォンでも見やすくするための設定です。
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カテゴリ作成-ExamHero</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class = "header-container">
+            <span class = "header-logo">
+                <a  th:href = "@{/dashboard}">ExamHero</a>
+            </span>
+
+            <span class="backbutton">
+                <a th:href ="@{/dashboard}">ダッシュボードへ</a>
+            </span>
+    </header>
+    <main>
+        <div class = "page-container">
+            <div class="page-card">
+                <h1>試験カテゴリ一覧</h1>
+                <p>作成したカテゴリの一覧です。</p>
+
+                
+
+                <div class="createbutton2">
+                    <a th:href = "@{/categories/new}">新しいカテゴリを作成</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>

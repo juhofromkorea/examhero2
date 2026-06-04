@@ -16,7 +16,7 @@
     <header>
         <div class = "header-container">
             <span class = "header-logo">
-                <a  th:href = "@{/}">ExamHero</a>
+                <a th:href = "@{/dashboard}">ExamHero</a>
             </span>
 
             <span class="dash-header">ダッシュボード</span>
@@ -53,9 +53,9 @@
         </div>
 
         <h2>学習カテゴリ</h2>
-        <a href = "@{/categories/list}">カテゴリ管理</a>
-        <a href = "@{/questions/form}">問題を登録</a>
-        <a href = "@{/categories/form}">カテゴリを作成する</a>
+        <a href = "@{/categories}">カテゴリ管理</a>
+        <a href = "@{/questions/new}">問題を登録</a>
+        <a class = "createbutton" href = "@{/categories/new}">カテゴリを作成する</a>
     </main>
 </body>
 </html>
