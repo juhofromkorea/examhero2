@@ -19,22 +19,41 @@
                 <a  th:href = "@{/dashboard}">ExamHero</a>
             </span>
 
-            <span class="backbutton">
-                <a th:href ="@{/dashboard}">ダッシュボードへ</a>
+            <span >
+                <a class="logoutbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
             </span>
+        </div>
     </header>
     <main>
         <div class = "page-container">
             <div class="page-card">
                 <h1>試験カテゴリ一覧</h1>
                 <p>作成したカテゴリの一覧です。</p>
-
-                
-
-                <div class="createbutton2">
-                    <a th:href = "@{/categories/new}">新しいカテゴリを作成</a>
-                </div>
+                <div class="message">
+                    <div class="success-message" th:if="${successMessage}" th:text ="${successMessage}">
+                        カテゴリ作成成功！
+                    </div>
+                </div>    
+                <table class="category-table">
+                    <thead>
+                        <tr>
+                            <th>カテゴリ名</th>
+                            <th>説明</th>
+                            <th>登録日時</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category:${categories}">
+                            <td th:text = "${category.name}"></td>
+                            <td th:text = "${category.description}"></td>
+                            <td th:text = "${#temporals.format(category.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <a class="createbutton" th:href = "@{/categories/new}">新しいカテゴリを作成</a>
             </div>
         </div>
     </main>
 </body>
+</html>

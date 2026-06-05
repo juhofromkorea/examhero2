@@ -18,7 +18,8 @@
             <h1>ログイン</h1>
             <div class="message">
                 <div class="success-message" th:if="${param.registered}">
-                    会員登録が完了しました。ログインしてください。
+                    会員登録が完了しました。<br>
+                    ログインしてください。
                 </div>
                 <div class="error-message" th:if="${param.error}">
                     メールアドレスまたはパスワードが<br>

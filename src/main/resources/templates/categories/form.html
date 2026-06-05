@@ -19,16 +19,17 @@
                 <a  th:href = "@{/dashboard}">ExamHero</a>
             </span>
 
-            <span class="backbutton">
-                <a th:href = "@{/categories}">カテゴリ一覧に戻る</a>
+            <span>
+                <a class="logoutbutton" th:href = "@{/categories}">カテゴリ一覧に戻る</a>
             </span>
+        </div>
     </header>
     <main>
-        <div class = "form-container">
-            <div class="form-card">
+        <div class = "page-container">
+            <div class="page-card">
                 <h1>試験カテゴリ作成</h1>
                 <p>基本情報技術者試験、AWS SAAなど登録したい資格名を入力してください。</p>
-                <form th:action="@{/form}" th:object = "${examCategoryForm}" method="post">
+                <form th:action="@{/categories}" th:object = "${examCategoryForm}" method="post">
                     <input
                         type="hidden"
                         th:name="${_csrf.parameterName}"
@@ -37,34 +38,36 @@
                     <div class="form-group">
                         <label for = "name">カテゴリ名</label>
                         <input
-                            type = "text";
-                            th:field = "${name}"
+                            type = "text"
+                            th:field = "*{name}"
                             placeholder="例：基本情報技術者試験"
                         >
-                        <p class field-error th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                        <p class = "field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                             カテゴリー名エラー
                         </p>
                     </div>
-
                     <div class="form-group">
                         <label for = "description">カテゴリ説明文</label>
                         <textarea
-                            th:field = "${description}"
-                            placeholder="基本情報技術者試験のA問題をまとめたカテゴリ"
-                        >
+                            th:field = "*{description}"
+                            placeholder= "例：基本情報技術者試験のA問題をまとめたカテゴリ">
+                        </textarea>
                         <p class="field-error" th:if = "${#fields.hasErrors('description')}" th:errors = "*{description}">
                             説明文エラー
                         </p>
                     </div>
                     
+                    <button type = "submit" class="createbutton">
+                        保存する
+                    </button>
 
+                    <span>
+                        <a class="cancel" th:href = "@{/categories}">キャンセル</a>
+                    </span>
+                
                 </form>
-                <button th:action = "submit" class="minibutton">
-                    保存する
-                </button>
-                <div class="cancel">
-                    <a href = "@{/dashboard}">キャンセル</a>
-                </div>
+                
+                
             </div>
         </div>    
     </main>
