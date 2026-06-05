@@ -30,10 +30,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class QuestionController {
     
-    private final AuthController authController;
     private final QuestionCardService questionCardService;
     private final ExamCategoryService examCategoryService;
-    private final QuestionAttemptService QuestionAttemptService;
+    private final QuestionAttemptService questionAttemptService;
 
     public QuestionController(
         QuestionCardService questionCardService,
@@ -43,7 +42,6 @@ public class QuestionController {
         this.questionCardService = questionCardService;
         this.examCategoryService = examCategoryService;
         this.questionAttemptService = questionAttemptService;
-        this.authController = authController;
     }
 
     @GetMapping("/questions")
