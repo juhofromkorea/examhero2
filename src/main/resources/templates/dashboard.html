@@ -39,7 +39,6 @@
                 今っきゃない
             </h1>
         </div>
-
         <div>
             <p>試験カテゴリ</p>
         </div>
@@ -53,9 +52,9 @@
         </div>
 
         <h2>学習カテゴリ</h2>
-        <a href = "@{/categories}">カテゴリ管理</a>
-        <a href = "@{/questions/new}">問題を登録</a>
-        <a class = "createbutton" href = "@{/categories/new}">カテゴリを作成する</a>
+        <a class="createbutton" th:href = "@{/categories}">カテゴリ管理</a>
+        <a class="createbutton" th:href = "@{/questions/new}">問題を登録</a>
+        <a class="createbutton" th:href = "@{/categories/new}">カテゴリを作成する</a>
     </main>
 </body>
 </html>
