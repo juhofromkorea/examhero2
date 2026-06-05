@@ -24,8 +24,6 @@ import com.example.examhero.entity.QuestionCard;
 import com.example.examhero.entity.User;
 import com.example.examhero.service.ExamCategoryService;
 import com.example.examhero.service.QuestionCardService;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 public class QuestionController {
