@@ -167,6 +167,11 @@ h3{
     border: 1px solid #cbd5e1;
     border-radius: 12px;
     margin-bottom: 14px;
+    font-family: 
+        "Yu Gothic",
+        "Hiragino Sans",
+        sans-serif;
+    font-weight: bold;
 }
 
 .button{
