@@ -21,7 +21,7 @@ import com.example.examhero.entity.User;
 import com.example.examhero.service.ExamCategoryService;
 
 
-
+        
 @Controller
 public class ExamCategoryController {
 
@@ -34,10 +34,9 @@ public class ExamCategoryController {
     @GetMapping("/categories")
     public String ExamCategory( @AuthenticationPrincipal UserDetails userDetails,
             Model model, Principal principal){
-
         String email = principal.getName();
-        User user = examCategoryService.findUserByEmail(email);
-
+        User user = examCategoryService.findUserByEmail(email);     
+        
         List<ExamCategory> categories = examCategoryService.findCategoriesByUser(user);
         model.addAttribute("categories", categories);
 
@@ -65,21 +64,18 @@ public class ExamCategoryController {
         if(bindingResult.hasErrors()){
             return "categories/form";
         }
-
+        
         try{
             User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
 
             examCategoryService.createCategory(form, loginUser);    
             redirectAttributes.addFlashAttribute("successMessage", "カテゴリを作成しました");
-            return "redirect:/category";
+            return "redirect:/categories";
 
         } catch (IllegalArgumentException e){
             bindingResult.reject("categoryError", e.getMessage());
             return "categories/form";
         }
     }
-    
-
-
-
+        
 }
