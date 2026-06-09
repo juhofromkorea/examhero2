@@ -12,52 +12,49 @@ import com.example.examhero.entity.User;
 import com.example.examhero.service.ExamCategoryService;
 import com.example.examhero.service.QuestionAttemptService;
 import com.example.examhero.service.QuestionCardService;
+import com.example.examhero.service.ReviewScheduleService;
 
 
 @Controller
 public class DashboardController {
 
     private final ExamCategoryService examCategoryService;
-
     private final QuestionCardService questionCardService;
-
-
     private final QuestionAttemptService questionAttemptService;
-
+    private final ReviewScheduleService reviewScheduleService;
 
     public DashboardController(
-            ExamCategoryService examCategoryService,
-            QuestionCardService questionCardService,
-            QuestionAttemptService questionAttemptService
+        ExamCategoryService examCategoryService,
+        QuestionCardService questionCardService,
+        QuestionAttemptService questionAttemptService,
+        ReviewScheduleService reviewScheduleService
     ) {
         this.examCategoryService = examCategoryService;
         this.questionCardService = questionCardService;
         this.questionAttemptService = questionAttemptService;
+        this.reviewScheduleService = reviewScheduleService;
     }
 
-
     @GetMapping("/dashboard")
-    public String showDashboard(Model model, Principal principal) {
-
-
+    public String showDashboard(
+        Model model, 
+        Principal principal
+    ) {
         String loginEmail = principal.getName();
-
         User loginUser = examCategoryService.findUserByEmail(loginEmail);
-
-
         List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
-
 
         long categoryCount = examCategoryService.countCategoriesByUser(loginUser);
         long questionCount = questionCardService.countQuestionCardsByUser(loginUser);
         long todayAttemptCount = questionAttemptService.countTodayAttempts(loginUser);
-
+        long todayReviewCount = reviewScheduleService.countTodayReviews(loginUser);
 
         model.addAttribute("loginEmail", loginEmail);
         model.addAttribute("categories", categories);
         model.addAttribute("categoryCount", categoryCount);
         model.addAttribute("questionCount", questionCount);
-        model.addAttribute("todayReviewCount", todayAttemptCount);
+        model.addAttribute("todayAttemptCount", todayAttemptCount);
+        model.addAttribute("todayReviewCount", todayReviewCount);
 
         return "dashboard";
     }

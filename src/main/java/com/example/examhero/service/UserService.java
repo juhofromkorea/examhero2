@@ -35,4 +35,10 @@ public class UserService {
     public boolean existsByEmail(String email){
         return userRepository.existsByEmail(email);
     }
+
+    @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("ユーザーが見つかりません"));
+    }
 }
