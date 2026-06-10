@@ -76,11 +76,11 @@
 
                 <!-- カテゴリがまだない場合 -->
                 <div class="content-card" th:if="${#lists.isEmpty(categories)}">
-                    <p class="page-description">
+                    <p class="empty-message">
                         まだ試験カテゴリがありません。まずはカテゴリを作成してください。
                     </p>
 
-                    <a class="primary-button inline-button" th:href="@{/categories/new}">
+                    <a class="createbutton" th:href="@{/categories/new}">
                         カテゴリを作成する
                     </a>
                 </div>
@@ -106,7 +106,6 @@
                         >
                             このカテゴリの説明です。
                         </p>
-
                         <p th:if="${category.description == null or #strings.isEmpty(category.description)}">
                             このカテゴリの問題を解きます。
                         </p>
