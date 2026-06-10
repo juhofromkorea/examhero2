@@ -34,6 +34,10 @@
                         問題カード作成成功！
                     </div>
                 </div>    
+                <div class="empty-message" th:if="${#lists.isEmpty(questionCards)}">
+                    まだ問題カードがありません。まずは「新しい問題カードを作成」から1問登録してみましょう。
+                </div>
+                <br>
                 <table class="category-table">
                     <thead>
                         <tr>
@@ -41,19 +45,42 @@
                             <th>問題文</th>
                             <th>正解</th>
                             <th>作成日時</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="question:${questions}">
-                            <td th:text = "${category.name}"></td>
-                            <td th:text = "${quesiotn.quesiotnText}"></td>
-                            <td th:text = "${quesiotn.correctAnswer}"></td>
-                            <td th:text = "${#temporals.format(quesiotn.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+                        <tr th:each="questionCard:${questionCards}">
+                            <td>
+                                <span  th:text = "${questionCard.examCategory.name}">AWS SAA</span>
+                            </td>
+                            <td>
+                                <p th:text ="${#strings.abbreviate(questionCard.questionText,80)}">問題文の一部がここに表示されます</p>
+                            </td> 
+                            <td>
+                                <strong th:text ="${questionCard.correctAnswer}">A</strong>
+                            </td>
+                            <td th:text = "${#temporals.format(questionCard.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+                            
+                            <td>
+                                <a
+                                    th:href="@{/questions/{id}(id=${questionCard.id})}"
+                                    class="secondary-button"
+                                >
+                                    詳細
+                                </a>
+                            </td>
+
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <a class="createbutton" th:href = "@{/quesiotns/new}">新しい問題を作成</a>
+                <a class="createbutton" th:href = "@{/questions/new}">新しい問題を作成</a>
+                <a class="createbutton" 
+                    th:each="category : ${categories}"
+                    th:href="@{/questions/categories/{id}/select(id=${category.id})}"
+                >
+                </a>
+
             </div>
         </div>
     </main>
