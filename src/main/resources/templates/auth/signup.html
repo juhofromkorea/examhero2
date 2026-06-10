@@ -38,6 +38,11 @@
                         メールアドレスエラー
                     </p>
                 </div>
+                <div
+                    th:if="${errorMessage}"
+                    class="field-error"
+                    th:text="${errorMessage}">
+                </div>
                 
                 <div class="form-group">
                     <label for="password">パスワード(8文字以上)</label>
