@@ -12,3 +12,66 @@
     <title>カテゴリ作成-ExamHero</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+<body>
+    <header>
+        <div class = "header-container">
+            <span class = "header-logo">
+                <a  th:href = "@{/dashboard}">ExamHero</a>
+            </span>
+
+            <span >
+                <a class="logoutbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
+            </span>
+        </div>
+    </header>
+    <main>
+        <div class = "page-container">
+            <div class="page-card">
+                <h1>問題カード詳細</h1>
+                <p>登録した問題文、選択肢、正解、解説を確認できます。</p>
+                
+                <p>試験カテゴリ</p>
+                <div class = "detail-label">
+                    <p th:text = "${questionCard.examCategory.name}"></p>
+                </div>
+                <p>問題文</p>
+                <div class="detail-label">
+                    <p th:text = "${questionCard.questionText}"></p>
+                </div>
+                <p>選択肢</p>
+                <table class="choose-table">
+                    <tr>
+                        <td>A</td>
+                        <td th:text = "${questionCard.optionA}"></td>
+                    </tr>
+
+                    <tr>
+                        <td>B</td>
+                        <td th:text = "${questionCard.optionB}"></td>
+                    </tr>
+
+                    <tr>
+                        <td>C</td>
+                        <td th:text = "${questionCard.optionC}"></td>
+                    </tr>
+
+                    <tr>
+                        <td>D</td>
+                        <td th:text = "${questionCard.optionD}"></td>
+                    </tr>
+                </table>
+                <p>正解</p>
+                <div class = "correct-label">
+                    <strong th:text ="${questionCard.correctAnswer}"></strong>
+                </div>
+                <p>解説</p>
+                <div class = "detail-label">
+                    <p th:text = "${questionCard.explanation}"></p>
+                </div>
+                <br>
+                <a class="createbutton" th:href = "@{/questions}">問題一覧へ戻る</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
