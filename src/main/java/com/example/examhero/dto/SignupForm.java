@@ -15,7 +15,7 @@ public class SignupForm {
     private String email;
 
     @NotBlank(message = "パスワードを入力してください")
-    @Size(min = 8, max = 100, message = "パスワードは8文字以上100文字以内で入力してください")
+    @Size(min = 8, max = 100, message = "パスワードは8文字以上100文字以内\nで入力してください")
     private String password;
 
     public SignupForm() {

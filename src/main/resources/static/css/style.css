@@ -59,6 +59,7 @@ main{
     font-size:2rem;
     font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
 }
 
 
@@ -154,6 +155,7 @@ main{
     font-size:16px;
     background-color: #dddddd;
     border-radius: 12px;
+    white-space: pre-line;
 }
 
 .form-group{
@@ -229,6 +231,7 @@ section{
     font-weight: 800;
     box-shadow: 0 10px 22px rgba(37, 99, 235, 0.24);
     transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+    cursor: pointer;
 }
 
 .loginbutton:hover{
@@ -269,6 +272,7 @@ section{
     text-decoration:none;
     box-shadow: 0 10px 22px rgba(37, 99, 235, 0.24);
     border: none;
+    cursor: pointer;
 }
 
 .categorybutton{
