@@ -123,15 +123,40 @@ public class ExamCategoryController {
         }
     }
 
+    @GetMapping("/categories/{id}/delete-confirm")
+    public String deleteConfirm(
+        @PathVariable Long id,
+        @AuthenticationPrincipal UserDetails userDetails,
+        Model model
+    ) {
+        User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
+        ExamCategory category = examCategoryService.findCategoryByIdAndUser(id, loginUser);
+        long questionCount = examCategoryService.countQuestionCardsByCategory(loginUser, id);
+
+        model.addAttribute("category", category);
+        model.addAttribute("questionCount", questionCount);
+
+        return "categories/delete-confirm";
+    }
+    
     @PostMapping("categories/{id}/delete")
     public String delete(
         @PathVariable Long id,
         @AuthenticationPrincipal UserDetails userDetails,
         RedirectAttributes redirectAttributes
     ) {
-        User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
-        examCategoryService.deleteCategory(loginUser, id);
-        redirectAttributes.addFlashAttribute("successMessage", "カテゴリを削除しました");
-        return "categories/list";
+        try {
+            User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
+            long deletedQuestionCount = examCategoryService.deleteCategoryWithQuestions(loginUser, id);
+
+            redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "カテゴリと、その中の問題カード " + deletedQuestionCount + " 件を削除しました"
+            );
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/categories";
     }
 }

@@ -7,22 +7,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.examhero.dto.ExamCategoryForm;
 import com.example.examhero.entity.ExamCategory;
+import com.example.examhero.entity.QuestionCard;
 import com.example.examhero.entity.User;
 import com.example.examhero.repository.ExamCategoryRepository;
 import com.example.examhero.repository.UserRepository;
+import com.example.examhero.repository.QuestionAttemptRepository;
+import com.example.examhero.repository.QuestionCardRepository;
 
 @Service
 public class ExamCategoryService {
     
+    private final QuestionAttemptRepository questionAttemptRepository;
+    private final QuestionCardRepository questionCardRepository;
     private final ExamCategoryRepository examCategoryRepository;
     private final UserRepository userRepository;
 
     public ExamCategoryService(
         ExamCategoryRepository examCategoryRepository,
-        UserRepository userRepository
+        UserRepository userRepository, QuestionCardRepository questionCardRepository, QuestionAttemptRepository questionAttemptRepository
     ) {
             this.examCategoryRepository = examCategoryRepository;
             this.userRepository = userRepository;
+            this.questionCardRepository = questionCardRepository;
+            this.questionAttemptRepository = questionAttemptRepository;
     }
 
     @Transactional(readOnly = true)
@@ -73,9 +80,19 @@ public class ExamCategoryService {
     }
 
     @Transactional
-    public void deleteCategory(User user, Long id) {
+    public long deleteCategoryWithQuestions(User user, Long id) {
         ExamCategory category = findCategoryByIdAndUser(id, user);
+        List<QuestionCard> questionCards = questionCardRepository.findByUserAndExamCategoryOrderByCreatedAtDesc(user, category);
+        long deletedQuestionCount = questionCards.size();
+
+        if (!questionCards.isEmpty()) {
+            questionAttemptRepository.deleteByUserAndQuestionCardIn(user, questionCards);
+            questionCardRepository.deleteAll(questionCards);
+        }
+        
         examCategoryRepository.delete(category);
+
+        return deletedQuestionCount;
     }
 
     @Transactional(readOnly = true)
@@ -87,5 +104,11 @@ public class ExamCategoryService {
     @Transactional(readOnly = true)
     public long countCategoriesByUser(User user) {
         return examCategoryRepository.countByUser(user);
+    }
+
+    @Transactional(readOnly = true)
+    public long countQuestionCardsByCategory(User user, Long categoryId) {
+        ExamCategory category = findCategoryByIdAndUser(categoryId, user);
+        return questionCardRepository.countByUserAndExamCategory(user, category);
     }
 }
