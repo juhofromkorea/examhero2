@@ -54,6 +54,30 @@ public class ExamCategoryService {
         return examCategoryRepository.save(category);
     }
 
+    @Transactional
+    public void updateCategory(ExamCategoryForm form, User user, Long id) {
+        ExamCategory category = findCategoryByIdAndUser(id, user);
+        String trimmedName = form.getName().trim();
+        String trimmedDescription = null;
+
+        if (form.getDescription() != null) {
+            trimmedDescription = form.getDescription().trim();
+        }
+
+        if (examCategoryRepository.existsByUserAndName(user, trimmedName)) {
+            throw new IllegalArgumentException("同じ名前のカテゴリがすでに存在します");
+        }
+
+        category.setName(trimmedName);
+        category.setDescription(trimmedDescription);
+    }
+
+    @Transactional
+    public void deleteCategory(User user, Long id) {
+        ExamCategory category = findCategoryByIdAndUser(id, user);
+        examCategoryRepository.delete(category);
+    }
+
     @Transactional(readOnly = true)
     public ExamCategory findCategoryByIdAndUser(Long id, User user) {
         return examCategoryRepository.findByIdAndUser(id, user)

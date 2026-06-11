@@ -43,14 +43,13 @@ public class QuestionCardService {
         return questionCardRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
-
     @Transactional(readOnly = true)
     public List<QuestionCard> findQuestionCardsByCategory(User user, Long examCategoryId) {
 
         ExamCategory examCategory = findCategoryByIdAndUser(examCategoryId, user);
 
         return questionCardRepository.findByUserAndExamCategoryOrderByCreatedAtDesc(user,examCategory);
-    }     
+    }
     
     @Transactional(readOnly = true)
     public QuestionCard findQuestionCardByIdAndUser(Long id, User user) {
@@ -58,7 +57,7 @@ public class QuestionCardService {
                 .orElseThrow(() -> new IllegalArgumentException("問題カードが見つかりません"));
     }
 
-     @Transactional
+    @Transactional
     public QuestionCard createQuestionCard(QuestionCardForm form, User user) {
 
         ExamCategory examCategory = findCategoryByIdAndUser(form.getExamCategoryId(), user);
@@ -69,28 +68,60 @@ public class QuestionCardService {
         String optionC = form.getOptionC().trim();
         String optionD = form.getOptionD().trim();
         String correctAnswer = form.getCorrectAnswer().trim();
-
         String explanation = null;
 
         if (form.getExplanation() != null && !form.getExplanation().trim().isEmpty()) {
             explanation = form.getExplanation().trim();
         }
 
-                QuestionCard questionCard = new QuestionCard(
-                questionText,
-                optionA,
-                optionB,
-                optionC,
-                optionD,
-                correctAnswer,
-                explanation,
-                user,
-                examCategory
+        QuestionCard questionCard = new QuestionCard(
+            questionText,
+            optionA,
+            optionB,
+            optionC,
+            optionD,
+            correctAnswer,
+            explanation,
+            user,
+            examCategory
         );
+
         return questionCardRepository.save(questionCard);
     }
 
-     private ExamCategory findCategoryByIdAndUser(Long examCategoryId, User user) {
+    @Transactional
+    public void updateQuestionCard(QuestionCardForm form, User user, Long id) {
+        QuestionCard questionCard = findQuestionCardByIdAndUser(id, user);
+        ExamCategory examCategory = findCategoryByIdAndUser(form.getExamCategoryId(), user);
+        String questionText = form.getQuestionText().trim();
+        String optionA = form.getOptionA().trim();
+        String optionB = form.getOptionB().trim();
+        String optionC = form.getOptionC().trim();
+        String optionD = form.getOptionD().trim();
+        String correctAnswer = form.getCorrectAnswer().trim();
+        String explanation = null;
+
+        if (form.getExplanation() != null && !form.getExplanation().trim().isEmpty()) {
+            explanation = form.getExplanation().trim();
+        }
+
+        questionCard.setQuestionText(questionText);
+        questionCard.setOptionA(optionA);
+        questionCard.setOptionB(optionB);
+        questionCard.setOptionC(optionC);
+        questionCard.setOptionD(optionD);
+        questionCard.setCorrectAnswer(correctAnswer);
+        questionCard.setExplanation(explanation);
+        questionCard.setExamCategory(examCategory);
+    }
+
+    @Transactional
+    public void deleteQuestionCard(User user, Long id) {
+        QuestionCard questionCard = findQuestionCardByIdAndUser(id, user);
+        questionCardRepository.delete(questionCard);
+    }
+
+    private ExamCategory findCategoryByIdAndUser(Long examCategoryId, User user) {
         return examCategoryRepository.findByIdAndUser(examCategoryId, user)
                 .orElseThrow(() -> new IllegalArgumentException("カテゴリが見つかりません"));
     }

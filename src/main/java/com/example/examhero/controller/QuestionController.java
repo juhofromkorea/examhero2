@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.examhero.entity.QuestionAttempt;
@@ -71,6 +72,30 @@ public class QuestionController {
         return "questions/form";
     }
 
+    @GetMapping("/questions/{id}/edit")
+    public String editForm(
+        @PathVariable Long id,
+        @AuthenticationPrincipal UserDetails userDetails,
+        Model model
+    ) {
+        User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
+        QuestionCard questionCard = questionCardService.findQuestionCardByIdAndUser(id, loginUser);
+        QuestionCardForm form = new QuestionCardForm();
+
+        form.setQuestionText(questionCard.getQuestionText());
+        form.setOptionA(questionCard.getOptionA());
+        form.setOptionB(questionCard.getOptionB());
+        form.setOptionC(questionCard.getOptionC());
+        form.setOptionD(questionCard.getOptionD());
+        form.setCorrectAnswer(questionCard.getCorrectAnswer());
+        form.setExplanation(questionCard.getExplanation());
+
+        model.addAttribute("questionCardForm", form);
+        model.addAttribute("questionCardId", id);
+
+        return "questions/form";
+    }
+
     @PostMapping("/questions")
     public String create(
         @Valid @ModelAttribute("questionCardForm") QuestionCardForm form,
@@ -96,6 +121,31 @@ public class QuestionController {
             bindingResult.reject("questionCardError", e.getMessage());
             model.addAttribute("categories", categories);
             model.addAttribute("loginEmail", loginUser.getEmail());
+            return "questions/form";
+        }
+    }
+
+    @PostMapping("/questions/{id}/edit")
+    public String update(
+        @PathVariable Long id,
+        @Valid @ModelAttribute("questionCardForm") QuestionCardForm form,
+        BindingResult bindingResult,
+        @AuthenticationPrincipal UserDetails userDetails,
+        RedirectAttributes redirectAttributes,
+        Model model
+    ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("questionCardId", id);
+            return "questions/form";
+        }
+        try {
+            User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
+            questionCardService.updateQuestionCard(form, loginUser, id);
+            redirectAttributes.addFlashAttribute("successMessage", "問題を更新しました");
+            return "redirect:/questions";
+        } catch (IllegalArgumentException e) {
+            bindingResult.reject("questionsError", e.getMessage());
+            model.addAttribute("questionCardId", id);
             return "questions/form";
         }
     }
@@ -168,7 +218,7 @@ public class QuestionController {
             model.addAttribute("isCorrect", null);
             model.addAttribute("errorMessage", "選択肢を1つ選んでください。");
 
-            return "question/solve";
+            return "questions/solve";
         }
 
         try {
@@ -196,4 +246,16 @@ public class QuestionController {
             return "questions/solve";
         }
     }    
+
+    @PostMapping("questions/{id}/delete")
+    public String delete(
+        @PathVariable Long id,
+        @AuthenticationPrincipal UserDetails userDetails,
+        RedirectAttributes redirectAttributes
+    ) {
+        User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
+        questionCardService.deleteQuestionCard(loginUser, id);
+        redirectAttributes.addFlashAttribute("successMessage", "問題を削除しました");
+        return "questions/list";
+    }
 }

@@ -58,8 +58,6 @@ public class QuestionAttemptService {
     public long countTodayAttempts(User user) {
 
         LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
-
-  
         LocalDateTime startOfTomorrow = startOfToday.plusDays(1);
 
         return questionAttemptRepository
@@ -79,7 +77,6 @@ public class QuestionAttemptService {
     public long countCorrectAttempts(User user) {
         return questionAttemptRepository.countByUserAndCorrect(user, true);
     }
-
 
     private boolean isValidAnswer(String answer) {
         return "A".equals(answer)
