@@ -1,6 +1,8 @@
 package com.example.examhero.service;
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,9 @@ public class ExamCategoryService {
 
     public ExamCategoryService(
         ExamCategoryRepository examCategoryRepository,
-        UserRepository userRepository, QuestionCardRepository questionCardRepository, QuestionAttemptRepository questionAttemptRepository
+        UserRepository userRepository, 
+        QuestionCardRepository questionCardRepository, 
+        QuestionAttemptRepository questionAttemptRepository
     ) {
             this.examCategoryRepository = examCategoryRepository;
             this.userRepository = userRepository;
@@ -80,16 +84,18 @@ public class ExamCategoryService {
     }
 
     @Transactional
-    public long deleteCategoryWithQuestions(User user, Long id) {
+    public long deleteCategory(User user, Long id) {
         ExamCategory category = findCategoryByIdAndUser(id, user);
-        List<QuestionCard> questionCards = questionCardRepository.findByUserAndExamCategoryOrderByCreatedAtDesc(user, category);
+        List<QuestionCard> questionCards = 
+            questionCardRepository.findByUserAndExamCategoryOrderByCreatedAtDesc(user, category);
+        
         long deletedQuestionCount = questionCards.size();
 
         if (!questionCards.isEmpty()) {
             questionAttemptRepository.deleteByUserAndQuestionCardIn(user, questionCards);
             questionCardRepository.deleteAll(questionCards);
         }
-        
+
         examCategoryRepository.delete(category);
 
         return deletedQuestionCount;
@@ -107,8 +113,13 @@ public class ExamCategoryService {
     }
 
     @Transactional(readOnly = true)
-    public long countQuestionCardsByCategory(User user, Long categoryId) {
-        ExamCategory category = findCategoryByIdAndUser(categoryId, user);
-        return questionCardRepository.countByUserAndExamCategory(user, category);
+    public Map<Long, Long> countQuestionCardsByCategory(User user, List<ExamCategory> categories) {
+        Map<Long, Long> questionCountMap = new HashMap<>();
+
+        for (ExamCategory category : categories) {
+            long count = questionCardRepository.countByUserAndExamCategory(user, category);
+            questionCountMap.put(category.getId(), count);
+        }
+        return questionCountMap;
     }
 }

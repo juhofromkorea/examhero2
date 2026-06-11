@@ -1,6 +1,7 @@
 package com.example.examhero.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import jakarta.validation.Valid;
 
@@ -38,8 +39,11 @@ public class ExamCategoryController {
     ) {
         User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());  
         List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
+        Map<Long, Long> questionCountMap = 
+            examCategoryService.countQuestionCardsByCategory(loginUser, categories);
 
         model.addAttribute("categories", categories);
+        model.addAttribute("questionCountMap", questionCountMap);
         model.addAttribute("editMode", editMode);
         model.addAttribute("examCategoryForm", new ExamCategoryForm());
     
@@ -122,24 +126,8 @@ public class ExamCategoryController {
             return "categories/form";
         }
     }
-
-    @GetMapping("/categories/{id}/delete-confirm")
-    public String deleteConfirm(
-        @PathVariable Long id,
-        @AuthenticationPrincipal UserDetails userDetails,
-        Model model
-    ) {
-        User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
-        ExamCategory category = examCategoryService.findCategoryByIdAndUser(id, loginUser);
-        long questionCount = examCategoryService.countQuestionCardsByCategory(loginUser, id);
-
-        model.addAttribute("category", category);
-        model.addAttribute("questionCount", questionCount);
-
-        return "categories/delete-confirm";
-    }
     
-    @PostMapping("categories/{id}/delete")
+    @PostMapping("/categories/{id}/delete")
     public String delete(
         @PathVariable Long id,
         @AuthenticationPrincipal UserDetails userDetails,
@@ -147,7 +135,7 @@ public class ExamCategoryController {
     ) {
         try {
             User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
-            long deletedQuestionCount = examCategoryService.deleteCategoryWithQuestions(loginUser, id);
+            long deletedQuestionCount = examCategoryService.deleteCategory(loginUser, id);
 
             redirectAttributes.addFlashAttribute(
                 "successMessage",
