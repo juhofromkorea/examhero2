@@ -54,6 +54,7 @@ public class ExamCategoryController {
     public String newForm( Model model ) {
 
         model.addAttribute("examCategoryForm", new ExamCategoryForm());
+        model.addAttribute("isEdit", false);
 
         return "categories/form";
     }
@@ -73,6 +74,7 @@ public class ExamCategoryController {
 
         model.addAttribute("examCategoryForm", form);
         model.addAttribute("categoryId", id);
+        model.addAttribute("isEdit", true);
 
         return "categories/form";
     }
@@ -82,10 +84,12 @@ public class ExamCategoryController {
         @Valid @ModelAttribute("examCategoryForm") ExamCategoryForm form,
         BindingResult bindingResult,
         @AuthenticationPrincipal UserDetails userDetails,
-        RedirectAttributes redirectAttributes
+        RedirectAttributes redirectAttributes,
+        Model model
     ){
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("isEdit", false);
             return "categories/form";
         }
         
@@ -98,6 +102,7 @@ public class ExamCategoryController {
 
         } catch (IllegalArgumentException e) {
             bindingResult.reject("categoryError", e.getMessage());
+            model.addAttribute("isEdit", false);
             return "categories/form";
         }
     }
@@ -113,6 +118,7 @@ public class ExamCategoryController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categoryId", id);
+            model.addAttribute("isEdit", true);
             return "categories/form";
         }
         try {
@@ -123,6 +129,7 @@ public class ExamCategoryController {
         } catch (IllegalArgumentException e) {
             bindingResult.reject("categoryError", e.getMessage());
             model.addAttribute("categoryId", id);
+            model.addAttribute("isEdit", true);
             return "categories/form";
         }
     }
