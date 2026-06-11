@@ -64,7 +64,7 @@ public class ExamCategoryService {
             trimmedDescription = form.getDescription().trim();
         }
 
-        if (examCategoryRepository.existsByUserAndName(user, trimmedName)) {
+        if (examCategoryRepository.existsByUserAndNameAndIdNot(user, trimmedName, id)) {
             throw new IllegalArgumentException("同じ名前のカテゴリがすでに存在します");
         }
 
