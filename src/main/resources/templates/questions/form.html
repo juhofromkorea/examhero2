@@ -28,10 +28,14 @@
     <main>
         <div class = "page-container">
             <div class="page-card">
-                <h1>問題カード作成</h1>
-                <p>4択形式の問題カードを1問登録できます。</p>
-                <form th:if = "${!#lists.isEmpty(categories)}" th:action="@{/questions}" th:object = "${questionCardForm}" method="post">
-                    
+                <h1 th:text="${questionCardId == null} ? '問題カード作成' : '問題カード編集'">問題カード作成</h1>
+                <p th:text="${questionCardId == null} ? '4択形式の問題カードを1問登録できます。' : '問題カードの内容を編集できます。'">
+                    4択形式の問題カードを1問登録できます。
+                </p>
+                <form th:if="${!#lists.isEmpty(categories)}"
+                    th:action="${questionCardId == null} ? @{/questions} : @{/questions/{id}/edit(id=${questionCardId})}"
+                    th:object="${questionCardForm}"
+                    method="post">
                     <div class="error-message" th:if = "${#fields.hasGlobalErrors()}">
                         <p th:each = "error : ${#fields.globalErrors()}">
                             エラーメッセージ
@@ -143,7 +147,7 @@
                         </p>
                     </div>
 
-                    <button type = "submit" class="createbutton">
+                    <button type="submit" class="createbutton" th:text="${questionCardId == null} ? '保存する' : '更新する'">
                         保存する
                     </button>
 

@@ -13,11 +13,17 @@ public interface QuestionCardRepository extends JpaRepository<QuestionCard, Long
 
     List<QuestionCard> findByUserOrderByCreatedAtDesc(User user);
 
-    List<QuestionCard> findByUserAndExamCategoryOrderByCreatedAtDesc(User user, ExamCategory examCategory);
+    List<QuestionCard> findByUserAndExamCategoryOrderByCreatedAtDesc(
+        User user, 
+        ExamCategory examCategory
+    );
 
     Optional<QuestionCard> findByIdAndUser(Long id, User user);
 
-    long countByUserAndExamCategory(User user, ExamCategory examCategory);
+    long countByUserAndExamCategory(
+        User user, 
+        ExamCategory examCategory
+    );
 
     long countByUser(User user);
 }

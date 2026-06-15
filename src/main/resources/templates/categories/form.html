@@ -35,6 +35,9 @@
                         同じカテゴリ名エラー
                     </div>
                     
+                <form th:action="${isEdit} ? @{/categories/{id}/edit(id=${categoryId})} : @{/categories}"
+                    th:object="${examCategoryForm}"
+                    method="post">
                     <input
                         type="hidden"
                         th:name="${_csrf.parameterName}"

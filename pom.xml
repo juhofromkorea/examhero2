@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>examhero</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.Remove-Item -Recurse -Force .\target1-SNAPSHOT</version>
 	<name>examhero</name>
 	<description/>
 	<url/>

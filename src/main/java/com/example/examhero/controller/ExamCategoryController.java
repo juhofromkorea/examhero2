@@ -1,6 +1,7 @@
 package com.example.examhero.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import jakarta.validation.Valid;
 
@@ -38,8 +39,11 @@ public class ExamCategoryController {
     ) {
         User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());  
         List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
+        Map<Long, Long> questionCountMap = 
+            examCategoryService.countQuestionCardsByCategory(loginUser, categories);
 
         model.addAttribute("categories", categories);
+        model.addAttribute("questionCountMap", questionCountMap);
         model.addAttribute("editMode", editMode);
         model.addAttribute("examCategoryForm", new ExamCategoryForm());
     
@@ -50,6 +54,7 @@ public class ExamCategoryController {
     public String newForm( Model model ) {
 
         model.addAttribute("examCategoryForm", new ExamCategoryForm());
+        model.addAttribute("isEdit", false);
 
         return "categories/form";
     }
@@ -69,6 +74,7 @@ public class ExamCategoryController {
 
         model.addAttribute("examCategoryForm", form);
         model.addAttribute("categoryId", id);
+        model.addAttribute("isEdit", true);
 
         return "categories/form";
     }
@@ -78,10 +84,12 @@ public class ExamCategoryController {
         @Valid @ModelAttribute("examCategoryForm") ExamCategoryForm form,
         BindingResult bindingResult,
         @AuthenticationPrincipal UserDetails userDetails,
-        RedirectAttributes redirectAttributes
+        RedirectAttributes redirectAttributes,
+        Model model
     ){
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("isEdit", false);
             return "categories/form";
         }
         
@@ -94,6 +102,7 @@ public class ExamCategoryController {
 
         } catch (IllegalArgumentException e) {
             bindingResult.reject("categoryError", e.getMessage());
+            model.addAttribute("isEdit", false);
             return "categories/form";
         }
     }
@@ -109,6 +118,7 @@ public class ExamCategoryController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categoryId", id);
+            model.addAttribute("isEdit", true);
             return "categories/form";
         }
         try {
@@ -119,19 +129,29 @@ public class ExamCategoryController {
         } catch (IllegalArgumentException e) {
             bindingResult.reject("categoryError", e.getMessage());
             model.addAttribute("categoryId", id);
+            model.addAttribute("isEdit", true);
             return "categories/form";
         }
     }
-
-    @PostMapping("categories/{id}/delete")
+    
+    @PostMapping("/categories/{id}/delete")
     public String delete(
         @PathVariable Long id,
         @AuthenticationPrincipal UserDetails userDetails,
         RedirectAttributes redirectAttributes
     ) {
-        User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
-        examCategoryService.deleteCategory(loginUser, id);
-        redirectAttributes.addFlashAttribute("successMessage", "カテゴリを削除しました");
-        return "categories/list";
+        try {
+            User loginUser = examCategoryService.findUserByEmail(userDetails.getUsername());
+            long deletedQuestionCount = examCategoryService.deleteCategory(loginUser, id);
+
+            redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "カテゴリと、その中の問題カード " + deletedQuestionCount + " 件を削除しました"
+            );
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/categories";
     }
 }

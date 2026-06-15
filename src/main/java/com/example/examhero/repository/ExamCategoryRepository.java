@@ -14,6 +14,8 @@ public interface ExamCategoryRepository extends JpaRepository<ExamCategory, Long
 
     boolean existsByUserAndName(User user, String name);
 
+    boolean existsByUserAndNameAndIdNot(User user, String name, Long id);
+
     Optional<ExamCategory> findByIdAndUser(Long id, User user);
 
     long countByUser(User user);
