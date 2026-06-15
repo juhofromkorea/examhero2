@@ -73,14 +73,16 @@ public class QuestionController {
 
     @GetMapping("/questions/{id}/edit")
     public String editForm(
-        @PathVariable Long id,
-        @AuthenticationPrincipal UserDetails userDetails,
-        Model model
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model
     ) {
         User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
         QuestionCard questionCard = questionCardService.findQuestionCardByIdAndUser(id, loginUser);
-        QuestionCardForm form = new QuestionCardForm();
+        List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
 
+        QuestionCardForm form = new QuestionCardForm();
+        form.setExamCategoryId(questionCard.getExamCategory().getId());
         form.setQuestionText(questionCard.getQuestionText());
         form.setOptionA(questionCard.getOptionA());
         form.setOptionB(questionCard.getOptionB());
@@ -91,6 +93,8 @@ public class QuestionController {
 
         model.addAttribute("questionCardForm", form);
         model.addAttribute("questionCardId", id);
+        model.addAttribute("categories", categories);
+        model.addAttribute("loginEmail", loginUser.getEmail());
 
         return "questions/form";
     }
@@ -126,25 +130,32 @@ public class QuestionController {
 
     @PostMapping("/questions/{id}/edit")
     public String update(
-        @PathVariable Long id,
-        @Valid @ModelAttribute("questionCardForm") QuestionCardForm form,
-        BindingResult bindingResult,
-        @AuthenticationPrincipal UserDetails userDetails,
-        RedirectAttributes redirectAttributes,
-        Model model
+            @PathVariable Long id,
+            @Valid @ModelAttribute("questionCardForm") QuestionCardForm form,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal UserDetails userDetails,
+            RedirectAttributes redirectAttributes,
+            Model model
     ) {
+        User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
+        List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("questionCardId", id);
+            model.addAttribute("categories", categories);
+            model.addAttribute("loginEmail", loginUser.getEmail());
             return "questions/form";
         }
+
         try {
-            User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
             questionCardService.updateQuestionCard(form, loginUser, id);
             redirectAttributes.addFlashAttribute("successMessage", "問題を更新しました");
             return "redirect:/questions";
         } catch (IllegalArgumentException e) {
-            bindingResult.reject("questionsError", e.getMessage());
+            bindingResult.reject("questionCardError", e.getMessage());
             model.addAttribute("questionCardId", id);
+            model.addAttribute("categories", categories);
+            model.addAttribute("loginEmail", loginUser.getEmail());
             return "questions/form";
         }
     }
@@ -246,15 +257,21 @@ public class QuestionController {
         }
     }    
 
-    @PostMapping("questions/{id}/delete")
+    @PostMapping("/questions/{id}/delete")
     public String delete(
-        @PathVariable Long id,
-        @AuthenticationPrincipal UserDetails userDetails,
-        RedirectAttributes redirectAttributes
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails,
+            RedirectAttributes redirectAttributes
     ) {
         User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
-        questionCardService.deleteQuestionCard(loginUser, id);
-        redirectAttributes.addFlashAttribute("successMessage", "問題を削除しました");
-        return "questions/list";
+
+        try {
+            questionCardService.deleteQuestionCard(loginUser, id);
+            redirectAttributes.addFlashAttribute("successMessage", "問題を削除しました");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/questions";
     }
 }
