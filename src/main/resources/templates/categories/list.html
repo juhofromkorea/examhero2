@@ -40,7 +40,7 @@
                             <th>カテゴリ名</th>
                             <th>説明</th>
                             <th>登録日時</th>
-                            <th>操作</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,20 +49,18 @@
                             <td th:text = "${category.description}"></td>
                             <td th:text = "${#temporals.format(category.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
                             <td>
-                                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                                    <a class="createbutton" th:href="@{/categories/{id}/edit(id=${category.id})}">
+                                <div class="question-actions">
+                                    <a th:href="@{/categories/{id}/edit(id=${category.id})}"
+                                    class="question-action-button">
                                         編集
                                     </a>
+
                                     <form th:action="@{/categories/{id}/delete(id=${category.id})}"
                                         method="post"
-                                        class="inline-form"
-                                        th:onsubmit="|return confirm('このカテゴリには ${questionCountMap[category.id]} 件の問題カードがあります。カテゴリと問題カードを一括削除しますか？');|">
-
-                                        <input type="hidden"
-                                            th:name="${_csrf.parameterName}"
-                                            th:value="${_csrf.token}">
-
-                                        <button type="submit" class="createbutton">
+                                        class="question-delete-form"
+                                        th:onsubmit="|return confirm('このカテゴリには ${questionCountMap[category.id]} 件の問題カードがあります。カテゴリを削除すると、中の問題カードも一緒に削除されます。削除しますか？');|">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                        <button type="submit" class="question-delete-button">
                                             削除
                                         </button>
                                     </form>
