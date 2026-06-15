@@ -49,8 +49,10 @@ public class QuestionController {
     ) {
         User loginUser = questionCardService.findUserByEmail(userDetails.getUsername());
         List<QuestionCard> questionCards = questionCardService.findQuestionCardsByUser(loginUser);
+        List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
 
         model.addAttribute("questionCards", questionCards);
+        model.addAttribute("categories", categories);
         model.addAttribute("loginEmail", loginUser.getEmail());
 
         return "questions/list";
