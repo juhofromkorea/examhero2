@@ -41,8 +41,8 @@ h3 {
 
 .header-container {
     background: white;
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 0;
+    padding: 14px 18px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
@@ -51,10 +51,17 @@ h3 {
 
 .header-logo a {
     color: #2563eb;
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
+}
+
+.toptitle {
+    text-align: center;
+    font-family: "行書体", "HG行書体", "EPSON 行書体";
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .header-link a {
@@ -184,21 +191,28 @@ section {
     margin: 0 12px 0;
 }
 
-.logoutbutton,
 .createbutton {
-    padding: 13px 18px;
+    padding: 11px 16px;
     color: #ffffff;
-    background: #2563eb;
-    border-radius: 12px;
-    border: none;
+    background-color: #2563eb;
+    font-size: 15px;
     font-weight: 700;
+    border-radius: 11px;
     text-decoration: none;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+    border: none;
     cursor: pointer;
 }
 
-.createbutton {
-    font-size: 16px;
-    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.24);
+.logoutbutton {
+    padding: 11px 16px;
+    color: #ffffff;
+    background: #2563eb;
+    border-radius: 11px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .dash-header {
@@ -206,13 +220,6 @@ section {
     font-size: 36px;
     color: #2564eb;
     font-weight: 600;
-}
-
-.toptitle {
-    text-align: center;
-    font-family: "行書体", "HG行書体", "EPSON 行書体";
-    font-size: 30px;
-    font-weight: 700;
 }
 
 .categorybutton {
@@ -303,49 +310,6 @@ tbody tr:hover {
     background: #f8fafc;
     border: 1px dashed #cbd5e1;
     text-align: center;
-}
-
-.dashboard-category-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-height: 560px;
-    overflow-y: auto;
-    padding: 4px 8px 4px 0;
-    margin-top: 20px;
-}
-
-.dashboard-category-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 96px;
-    padding: 28px 36px;
-    border-radius: 22px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-    text-decoration: none;
-    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-}
-
-.dashboard-category-row:hover {
-    transform: translateY(-3px);
-    border-color: #93c5fd;
-    box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
-}
-
-.dashboard-category-name {
-    color: #0f172a;
-    font-size: 22px;
-    font-weight: 900;
-}
-
-.dashboard-category-count {
-    color: #2563eb;
-    font-size: 20px;
-    font-weight: 900;
-    white-space: nowrap;
 }
 
 .answer-radio {
@@ -469,60 +433,59 @@ tbody tr:hover {
     font-size: 14px;
     cursor: pointer;
 }
-
 .dashboard-main {
     max-width: none;
-    padding: 24px 20px 48px;
+    padding: 18px 20px 36px;
 }
 
 .dashboard-content {
-    width: min(100%, 1360px);
+    width: min(100%, 1120px);
     margin: 0 auto;
 }
 
 .dashboard-title {
     width: 100%;
-    margin: 0 0 18px;
-    padding: 34px 40px;
+    margin: 0 0 16px;
+    padding: 26px 34px;
     color: #ffffff;
     background: #2563eb;
     border-radius: 12px;
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 900;
 }
 
 .dashboard-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    margin: 0 0 56px;
+    gap: 20px;
+    margin: 0 0 42px;
 }
 
 .dashboard-stat-card {
-    min-height: 170px;
-    padding: 28px 32px;
-    border-radius: 18px;
+    min-height: 132px;
+    padding: 22px 26px;
+    border-radius: 16px;
     background: #e2e8f0;
 }
 
 .dashboard-stat-label {
-    margin: 0 0 24px;
+    margin: 0 0 18px;
     color: #0f172a;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 800;
 }
 
 .dashboard-stat-number {
-    margin: 0 0 24px;
+    margin: 0 0 18px;
     color: #0f172a;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 800;
 }
 
 .dashboard-stat-text {
     margin: 0;
     color: #0f172a;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
 }
 
@@ -534,28 +497,28 @@ tbody tr:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 28px;
+    gap: 14px;
+    margin-bottom: 22px;
 }
 
 .dashboard-action-header h2 {
     margin: 0;
     color: #0f172a;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 900;
 }
 
 .dashboard-action-buttons {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
 .dashboard-category-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    max-height: 440px;
+    gap: 12px;
+    max-height: 360px;
     overflow-y: auto;
     padding: 0 8px 0 0;
 }
@@ -565,31 +528,31 @@ tbody tr:hover {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    min-height: 96px;
-    padding: 28px 36px;
-    border-radius: 22px;
+    min-height: 74px;
+    padding: 20px 28px;
+    border-radius: 18px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
     text-decoration: none;
     transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 
 .dashboard-category-row:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     border-color: #93c5fd;
-    box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
 
 .dashboard-category-name {
     color: #0f172a;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
 }
 
 .dashboard-category-count {
     color: #2563eb;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
     white-space: nowrap;
 }
