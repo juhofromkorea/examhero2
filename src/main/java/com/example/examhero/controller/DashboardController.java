@@ -2,6 +2,7 @@ package com.example.examhero.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,8 @@ import com.example.examhero.service.QuestionCardService;
 public class DashboardController {
 
     private final ExamCategoryService examCategoryService;
-
     private final QuestionCardService questionCardService;
-
-
     private final QuestionAttemptService questionAttemptService;
-
 
     public DashboardController(
             ExamCategoryService examCategoryService,
@@ -35,28 +32,23 @@ public class DashboardController {
         this.questionAttemptService = questionAttemptService;
     }
 
-
     @GetMapping("/dashboard")
     public String showDashboard(Model model, Principal principal) {
 
-
         String loginEmail = principal.getName();
-
         User loginUser = examCategoryService.findUserByEmail(loginEmail);
-
-
         List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
-
+        Map<Long, Long> questionCountMap = examCategoryService.countQuestionCardsByCategory(loginUser, categories);
 
         long categoryCount = examCategoryService.countCategoriesByUser(loginUser);
         long questionCount = questionCardService.countQuestionCardsByUser(loginUser);
         long todayAttemptCount = questionAttemptService.countTodayAttempts(loginUser);
 
-
         model.addAttribute("loginEmail", loginEmail);
         model.addAttribute("categories", categories);
         model.addAttribute("categoryCount", categoryCount);
         model.addAttribute("questionCount", questionCount);
+        model.addAttribute("questionCountMap", questionCountMap);
         model.addAttribute("todayReviewCount", todayAttemptCount);
 
         return "dashboard";

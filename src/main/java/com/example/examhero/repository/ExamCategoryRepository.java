@@ -12,6 +12,8 @@ public interface ExamCategoryRepository extends JpaRepository<ExamCategory, Long
 
     List<ExamCategory> findByUserOrderByCreatedAtDesc(User user);
 
+    List<ExamCategory> findByUserOrderByCreatedAtAsc(User user);
+
     boolean existsByUserAndName(User user, String name);
 
     boolean existsByUserAndNameAndIdNot(User user, String name, Long id);

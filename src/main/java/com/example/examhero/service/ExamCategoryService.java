@@ -44,7 +44,7 @@ public class ExamCategoryService {
 
     @Transactional(readOnly = true)
     public List<ExamCategory> findCategoriesByUser(User user) {
-        return examCategoryRepository.findByUserOrderByCreatedAtDesc(user);
+        return examCategoryRepository.findByUserOrderByCreatedAtAsc(user);
     }
 
     @Transactional
