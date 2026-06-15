@@ -38,9 +38,9 @@ main{
 
 .bold{
     color : #2563eb;
-    font-size: 45px; 
+    font-size: 48px; 
     text-align: center;
-    font-weight: bold;
+    font-weight: 1000;
 }
 
 .header-container {
@@ -52,6 +52,19 @@ main{
     display: flex;
     justify-content: space-between;
     align-items: right;
+}
+
+.header-linkbottom {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    gap: 18px;
+}
+
+.header-linkbottom a{
+    text-align: center;
+    text-decoration: none;
+    font-size : 1.2rem;
 }
 
 .header-logo a{
@@ -116,7 +129,8 @@ main{
 
 .body-link a{
     text-decoration: none;
-    color: #2563eb
+    color: #2563eb;
+    font-size: 18px;
 }
 
 .message{
