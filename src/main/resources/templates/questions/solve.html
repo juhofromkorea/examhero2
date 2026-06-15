@@ -114,10 +114,14 @@
                                     type="radio"
                                     name="selectedAnswer"
                                     value="A"
-                                    th:checked="${selectedAnswer == 'A'}"
+                                    th:checked="${answered != true and selectedAnswer == 'A'}"
                                 >
 
-                                <label class="answer-option" for="answerA">
+                                <label
+                                    class="answer-option"
+                                    th:classappend="${answered == true and questionCard.correctAnswer == 'A'} ? 'answer-option-correct' : ''"
+                                    for="answerA"
+                                >
                                     <span class="answer-label">A</span>
 
                                     <span
@@ -125,13 +129,6 @@
                                         th:text="${questionCard.optionA}"
                                     >
                                         選択肢A
-                                    </span>
-
-                                    <span
-                                        class="answer-correct-badge"
-                                        th:if="${answered == true and questionCard.correctAnswer == 'A'}"
-                                    >
-                                        正解
                                     </span>
                                 </label>
                             </div>
@@ -144,10 +141,14 @@
                                     type="radio"
                                     name="selectedAnswer"
                                     value="B"
-                                    th:checked="${selectedAnswer == 'B'}"
+                                    th:checked="${answered != true and selectedAnswer == 'B'}"
                                 >
 
-                                <label class="answer-option" for="answerB">
+                                <label
+                                    class="answer-option"
+                                    th:classappend="${answered == true and questionCard.correctAnswer == 'B'} ? 'answer-option-correct' : ''"
+                                    for="answerB"
+                                >
                                     <span class="answer-label">B</span>
 
                                     <span
@@ -155,13 +156,6 @@
                                         th:text="${questionCard.optionB}"
                                     >
                                         選択肢B
-                                    </span>
-
-                                    <span
-                                        class="answer-correct-badge"
-                                        th:if="${answered == true and questionCard.correctAnswer == 'B'}"
-                                    >
-                                        正解
                                     </span>
                                 </label>
                             </div>
@@ -174,10 +168,14 @@
                                     type="radio"
                                     name="selectedAnswer"
                                     value="C"
-                                    th:checked="${selectedAnswer == 'C'}"
+                                    th:checked="${answered != true and selectedAnswer == 'C'}"
                                 >
 
-                                <label class="answer-option" for="answerC">
+                                <label
+                                    class="answer-option"
+                                    th:classappend="${answered == true and questionCard.correctAnswer == 'C'} ? 'answer-option-correct' : ''"
+                                    for="answerC"
+                                >
                                     <span class="answer-label">C</span>
 
                                     <span
@@ -185,13 +183,6 @@
                                         th:text="${questionCard.optionC}"
                                     >
                                         選択肢C
-                                    </span>
-
-                                    <span
-                                        class="answer-correct-badge"
-                                        th:if="${answered == true and questionCard.correctAnswer == 'C'}"
-                                    >
-                                        正解
                                     </span>
                                 </label>
                             </div>
@@ -204,10 +195,14 @@
                                     type="radio"
                                     name="selectedAnswer"
                                     value="D"
-                                    th:checked="${selectedAnswer == 'D'}"
+                                    th:checked="${answered != true and selectedAnswer == 'D'}"
                                 >
 
-                                <label class="answer-option" for="answerD">
+                                <label
+                                    class="answer-option"
+                                    th:classappend="${answered == true and questionCard.correctAnswer == 'D'} ? 'answer-option-correct' : ''"
+                                    for="answerD"
+                                >
                                     <span class="answer-label">D</span>
 
                                     <span
@@ -215,13 +210,6 @@
                                         th:text="${questionCard.optionD}"
                                     >
                                         選択肢D
-                                    </span>
-
-                                    <span
-                                        class="answer-correct-badge"
-                                        th:if="${answered == true and questionCard.correctAnswer == 'D'}"
-                                    >
-                                        正解
                                     </span>
                                 </label>
                             </div>

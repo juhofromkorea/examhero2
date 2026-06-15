@@ -39,10 +39,10 @@
                     <a
                         th:each="questionCard, stat : ${questionCards}"
                         th:href="@{/questions/{id}/solve(id=${questionCard.id})}"
-                        class="createbutton"
-                        style="min-width: 100px; text-align: center;"
+                        class="question-select-button"
+                        style="min-width: 50px; text-align: center;"
                     >
-                        <span th:text="|第${stat.count}問|">第1問</span>
+                        <span th:text="${stat.count}">1</span>
                     </a>
 
                 </div>
