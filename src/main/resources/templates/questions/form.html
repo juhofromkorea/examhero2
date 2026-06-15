@@ -149,21 +149,20 @@
                             解説エラー
                         </p>
                     </div>
-                </form>
-                <br>
-                <div 
+                    <div 
                         style="display: flex; margin-right: 12px; align-items: center; gap: 16px; flex-wrap: wrap;"
                     >
-                        <a class="createbutton" th:href = "@{/categories/new}" th:if="${#lists.isEmpty(categories)}">新しいカテゴリを作成</a>
-
-                        <button type="submit" class="createbutton" th:text="${questionCardId == null} ? '保存する' : '更新する'" th:if="${!#lists.isEmpty(ExamCategory)}">
+                        <button type="submit" class="createbutton" th:text="${questionCardId == null} ? '保存する' : '更新する'" th:if="${!#lists.isEmpty(categories)}">
                             保存する
                         </button>
-
-                        <div>
-                            <a class="cancel" th:href = "@{/questions}">キャンセル</a>
-                        </div>
+                        <a class="cancel" th:href = "@{/questions}">キャンセル</a>
                     </div>
+                </form>
+                <br>
+                <div th:if="${#lists.isEmpty(categories)}">
+                    <a class="createbutton" th:href = "@{/categories/new}" >新しいカテゴリを作成</a>
+                    <a class="cancel" th:href = "@{/dashboard}">キャンセル</a>
+                </div>
             </div>
         </div>
     </main>
