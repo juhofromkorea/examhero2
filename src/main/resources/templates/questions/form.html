@@ -20,7 +20,7 @@
             </span>
 
             <span>
-                <a class="logoutbutton" th:href = "@{/questions}">問題一覧に戻る</a>
+                <a class="createbutton" th:href = "@{/questions}">問題一覧に戻る</a>
             </span>
         </div>
     </header>
@@ -32,6 +32,9 @@
                 <p th:text="${questionCardId == null} ? '4択形式の問題カードを1問登録できます。' : '問題カードの内容を編集できます。'">
                     4択形式の問題カードを1問登録できます。
                 </p>
+                <div class="empty-message" th:if="${#lists.isEmpty(categories)}">
+                    まだカテゴリがありません。まずは「新しいカテゴリを作成」から1問登録してみましょう。
+                </div>
                 <form th:if="${!#lists.isEmpty(categories)}"
                     th:action="${questionCardId == null} ? @{/questions} : @{/questions/{id}/edit(id=${questionCardId})}"
                     th:object="${questionCardForm}"
@@ -146,15 +149,21 @@
                             解説エラー
                         </p>
                     </div>
-
-                    <button type="submit" class="createbutton" th:text="${questionCardId == null} ? '保存する' : '更新する'">
-                        保存する
-                    </button>
-
-                    <span>
-                        <a class="cancel" th:href = "@{/questions}">キャンセル</a>
-                    </span>
                 </form>
+                <br>
+                <div 
+                        style="display: flex; margin-right: 12px; align-items: center; gap: 16px; flex-wrap: wrap;"
+                    >
+                        <a class="createbutton" th:href = "@{/categories/new}" th:if="${#lists.isEmpty(categories)}">新しいカテゴリを作成</a>
+
+                        <button type="submit" class="createbutton" th:text="${questionCardId == null} ? '保存する' : '更新する'" th:if="${!#lists.isEmpty(ExamCategory)}">
+                            保存する
+                        </button>
+
+                        <div>
+                            <a class="cancel" th:href = "@{/questions}">キャンセル</a>
+                        </div>
+                    </div>
             </div>
         </div>
     </main>
