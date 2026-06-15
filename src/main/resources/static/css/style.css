@@ -445,13 +445,42 @@ tbody tr:hover {
 
 .dashboard-title {
     width: 100%;
-    margin: 0 0 16px;
-    padding: 26px 34px;
+    margin: 0 0 24px;
+    padding: 38px 52px;
     color: #ffffff;
     background: #2563eb;
-    border-radius: 12px;
-    font-size: 32px;
+    border-radius: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.dashboard-title-heading {
+    margin: 0;
+    color: #ffffff;
+    font-size: 36px;
     font-weight: 900;
+}
+
+.dashboard-user-message {
+    text-align: right;
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.dashboard-user-message p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.dashboard-user-message p:first-child {
+    font-size: 20px;
+}
+
+.dashboard-user-message p:last-child {
+    font-size: 17px;
 }
 
 .dashboard-stats {
@@ -463,28 +492,31 @@ tbody tr:hover {
 
 .dashboard-stat-card {
     min-height: 132px;
-    padding: 22px 26px;
-    border-radius: 16px;
-    background: #e2e8f0;
+    padding: 24px 28px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
 .dashboard-stat-label {
-    margin: 0 0 18px;
+    margin: 0 0 14px;
     color: #0f172a;
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .dashboard-stat-number {
-    margin: 0 0 18px;
-    color: #0f172a;
-    font-size: 20px;
-    font-weight: 800;
+    margin: 0 0 14px;
+    color: #2563eb;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1.1;
 }
 
 .dashboard-stat-text {
     margin: 0;
-    color: #0f172a;
+    color: #334155;
     font-size: 15px;
     font-weight: 700;
 }

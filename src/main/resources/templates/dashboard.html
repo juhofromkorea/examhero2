@@ -37,7 +37,16 @@
     </header>
     <main class="dashboard-main">
         <div class="dashboard-content">
-            <h1 class="dashboard-title">ダッシュボード</h1>
+            <div class="dashboard-title">
+                <h1 class="dashboard-title-heading">ダッシュボード</h1>
+
+                <div class="dashboard-user-message">
+                    <p>
+                        <span th:text="${loginUsername}">ユーザー名</span>さん
+                    </p>
+                    <p>お疲れ様でした！</p>
+                </div>
+            </div>
             <section class="dashboard-stats">
                 <div class="dashboard-stat-card">
                     <p class="dashboard-stat-label">試験カテゴリ</p>

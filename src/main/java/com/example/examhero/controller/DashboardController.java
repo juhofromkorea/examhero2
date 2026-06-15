@@ -37,6 +37,7 @@ public class DashboardController {
 
         String loginEmail = principal.getName();
         User loginUser = examCategoryService.findUserByEmail(loginEmail);
+        String loginUsername = loginUser.getUsername();
         List<ExamCategory> categories = examCategoryService.findCategoriesByUser(loginUser);
         Map<Long, Long> questionCountMap = examCategoryService.countQuestionCardsByCategory(loginUser, categories);
 
@@ -44,6 +45,7 @@ public class DashboardController {
         long questionCount = questionCardService.countQuestionCardsByUser(loginUser);
         long todayAttemptCount = questionAttemptService.countTodayAttempts(loginUser);
 
+        model.addAttribute("loginUsername", loginUsername);
         model.addAttribute("loginEmail", loginEmail);
         model.addAttribute("categories", categories);
         model.addAttribute("categoryCount", categoryCount);
