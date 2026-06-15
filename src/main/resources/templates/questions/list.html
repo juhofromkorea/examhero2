@@ -62,15 +62,16 @@
                             <td th:text = "${#temporals.format(questionCard.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
                             <td>
                                 <div class="question-actions">
-                                    <a class="question-action-button" th:href="@{/questions/{id}(id=${questionCard.id})}">詳細</a>
-                                    <a class="question-action-button" th:href="@{/questions/{id}/edit(id=${questionCard.id})}">編集</a>
+                                    <a th:href="@{/questions/{id}(id=${questionCard.id})}" class="secondary-button">詳細</a>
+
+                                    <a th:href="@{/questions/{id}/edit(id=${questionCard.id})}" class="secondary-button">編集</a>
 
                                     <form th:action="@{/questions/{id}/delete(id=${questionCard.id})}"
                                         method="post"
-                                        class="question-delete-form"
+                                        class="inline-form"
                                         onsubmit="return confirm('この問題を削除しますか？');">
                                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                        <button type="submit" class="question-delete-button">削除</button>
+                                        <button type="submit" class="danger-button">削除</button>
                                     </form>
                                 </div>
                             </td>

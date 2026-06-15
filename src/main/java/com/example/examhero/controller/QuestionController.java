@@ -152,7 +152,7 @@ public class QuestionController {
             redirectAttributes.addFlashAttribute("successMessage", "問題を更新しました");
             return "redirect:/questions";
         } catch (IllegalArgumentException e) {
-            bindingResult.reject("questionCardError", e.getMessage());
+            bindingResult.reject("questionsError", e.getMessage());
             model.addAttribute("questionCardId", id);
             model.addAttribute("categories", categories);
             model.addAttribute("loginEmail", loginUser.getEmail());
