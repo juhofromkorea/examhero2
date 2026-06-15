@@ -40,7 +40,8 @@ main{
     color : #2563eb;
     font-size: 48px; 
     text-align: center;
-    font-weight: 1000;
+    font-family:Times New Roman, serif;
+    font-weight: 1200;
 }
 
 .header-container {
