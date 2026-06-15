@@ -434,36 +434,66 @@ tbody tr:hover {
 
 .question-actions {
     display: flex;
-    gap: 8px;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.question-action-button,
+.question-delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 32px;
+    padding: 0;
+
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+
+    border: 1px solid transparent;
+    box-shadow: none;
+    cursor: pointer;
 }
 
 .question-action-button {
-    padding: 8px 12px;
-    color: #ffffff;
-    background-color: #2563eb;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
+    color: #2563eb;
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.question-action-button:hover {
+    background-color: #dbeafe;
 }
 
 .question-delete-form {
-    display: inline;
+    display: inline-flex;
     margin: 0;
 }
 
 .question-delete-button {
-    padding: 8px 12px;
-    color: #ffffff;
-    background-color: #dc2626;
-    border: none;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
+    font-family: inherit;
+    color: #dc2626;
+    background-color: #fff1f2;
+    border-color: #fecdd3;
 }
+
+.question-delete-button:hover {
+    background-color: #fee2e2;
+}
+
+.category-table th:last-child,
+.category-table td:last-child {
+    width: 190px;
+    text-align: center;
+}
+
 .dashboard-main {
     max-width: none;
     padding: 18px 20px 36px;
@@ -618,4 +648,8 @@ tbody tr:hover {
     font-size: 18px;
     font-weight: 900;
     white-space: nowrap;
+}
+
+.answer-column {
+    text-align: center;
 }
