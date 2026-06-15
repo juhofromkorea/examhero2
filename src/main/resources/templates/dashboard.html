@@ -35,82 +35,65 @@
                 </button>
             </form>
     </header>
-    <main>
-        <h1 class="top">ダッシュボード</h1>
-        <section>
-            <div class="count-category">
-                <p>試験カテゴリ</p>
-                <p th:text ="${categoryCount}"></p>
-                <p>登録済みのカテゴリ数です</p>
-            </div>
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <div class="dashboard-title">
+                <h1 class="dashboard-title-heading">ダッシュボード</h1>
 
-            <div class="count-category">
-                <p>問題カード</p>
-                <p th:text ="${questionCount}"></p>
-                <p>登録した問題カードの合計数です。</p>
+                <div class="dashboard-user-message">
+                    <p>
+                        <span th:text="${loginUsername}">ユーザー名</span>さん
+                    </p>
+                    <p>お疲れ様でした！</p>
+                </div>
             </div>
-
-            <div class="count-category">
-                <p>今日解いた問題</p>
-                <p th:text ="${todayReviewCount}"></p>
-                <p>今日解答した問題数です。</p>
-            </div>
-        </section>
-        <div class="action-section">
-
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;"
-                >
+            <section class="dashboard-stats">
+                <div class="dashboard-stat-card">
+                    <p class="dashboard-stat-label">試験カテゴリ</p>
+                    <p class="dashboard-stat-number" th:text="${categoryCount}">0</p>
+                    <p class="dashboard-stat-text">登録済みのカテゴリ数です</p>
+                </div>
+                <div class="dashboard-stat-card">
+                    <p class="dashboard-stat-label">問題カード</p>
+                    <p class="dashboard-stat-number" th:text="${questionCount}">0</p>
+                    <p class="dashboard-stat-text">登録した問題カードの合計数です。</p>
+                </div>
+                <div class="dashboard-stat-card">
+                    <p class="dashboard-stat-label">今日解いた問題</p>
+                    <p class="dashboard-stat-number" th:text="${todayReviewCount}">0</p>
+                    <p class="dashboard-stat-text">今日解答した問題数です。</p>
+                </div>
+            </section>
+            <div class="dashboard-action-section">
+                <div class="dashboard-action-header">
                     <h2>問題演習</h2>
-
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <a class="createbutton" th:href="@{/categories}">
-                            カテゴリ管理
-                        </a>
-
-                        <a class="createbutton" th:href="@{/questions/new}">
-                            問題を登録
-                        </a>
+                    <div class="dashboard-action-buttons">
+                        <a class="createbutton" th:href="@{/categories}">カテゴリ管理</a>
+                        <a class="createbutton" th:href="@{/questions/new}">問題を登録</a>
                     </div>
                 </div>
-
-                <!-- カテゴリがまだない場合 -->
                 <div class="content-card" th:if="${#lists.isEmpty(categories)}">
                     <p class="empty-message">
                         まだ試験カテゴリがありません。まずはカテゴリを作成してください。
                     </p>
-
                     <a class="createbutton" th:href="@{/categories/new}">
                         カテゴリを作成する
                     </a>
                 </div>
-
-                <!--
-                    カテゴリ一覧です。
-                    カテゴリをクリックすると、問題文一覧ではなく「問題番号一覧」に移動します。
-                -->
-                <div class="action-grid" th:if="${!#lists.isEmpty(categories)}">
-
-                    <a
-                        class="action-card"
-                        th:each="category : ${categories}"
-                        th:href="@{/questions/categories/{id}/select(id=${category.id})}"
-                    >
-                        <h3 th:text="${category.name}">
+                <div class="dashboard-category-list" th:if="${!#lists.isEmpty(categories)}">
+                    <a class="dashboard-category-row"
+                    th:each="category : ${categories}"
+                    th:href="@{/questions/categories/{id}/select(id=${category.id})}">
+                        <span class="dashboard-category-name" th:text="${category.name}">
                             AWS SAA
-                        </h3>
-
-                        <p
-                            th:if="${category.description != null and !#strings.isEmpty(category.description)}"
-                            th:text="${category.description}"
-                        >
-                            このカテゴリの説明です。
-                        </p>
-                        <p th:if="${category.description == null or #strings.isEmpty(category.description)}">
-                            このカテゴリの問題を解きます。
-                        </p>
+                        </span>
+                        <span class="dashboard-category-count">
+                            問題数 
+                            <span th:text="${questionCountMap[category.id]}">0</span>
+                        </span>
                     </a>
                 </div>
+            </div>
         </div>
     </main>
 </body>
