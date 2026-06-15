@@ -218,21 +218,6 @@ section{
     border-radius: 12px;
     margin:0 12px 0;
 }
-.button{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 13px 18px;
-    border: none;
-    border-radius: 12px;
-    color: #ffffff;
-    background: #2563eb;
-    font-weight: 800;
-    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.24);
-    transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
-    cursor: pointer;
-}
 
 .loginbutton:hover{
     box-shadow: 0 14px 28px;
