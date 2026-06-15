@@ -204,6 +204,19 @@ section {
     cursor: pointer;
 }
 
+.question-select-button {
+    padding: 11px 16px;
+    color: #2563eb;
+    background-color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 11px;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+    border: 2px solid #2563eb;
+    cursor: pointer;
+}
+
 .logoutbutton {
     padding: 11px 16px;
     color: #ffffff;
