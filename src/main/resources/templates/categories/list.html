@@ -18,8 +18,8 @@
             <span class = "header-logo">
                 <a  th:href = "@{/dashboard}">ExamHero</a>
             </span>
-            <span >
-                <a class="logoutbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
+            <span>
+                <a class="createbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
             </span>
         </div>
     </header>
@@ -28,12 +28,13 @@
             <div class="page-card">
                 <h1>試験カテゴリ一覧</h1>
                 <p>作成したカテゴリの一覧です。</p>
-                <div class="message">
-                    <div class="success-message" th:if="${successMessage}" th:text ="${successMessage}">
-                        カテゴリ作成成功！
-                    </div>
-                </div>   
-                <table class="category-table">
+                <div class="success-message" th:if="${successMessage}" th:text ="${successMessage}">
+                    カテゴリ作成成功！
+                </div>
+                <div class="empty-message" th:if="${#lists.isEmpty(categories)}">
+                    まだカテゴリがありません。まずは「新しいカテゴリを作成」から1問登録してみましょう。
+                </div>
+                <table class="category-table" th:if="${!#lists.isEmpty(categories)}">
                     <thead>
                         <tr>
                             <th>カテゴリ名</th>
@@ -72,7 +73,7 @@
                 </table>
                 <br>
                 <a class="createbutton" th:href = "@{/categories/new}">新しいカテゴリを作成</a>
-                <a class="createbutton" th:href = "@{/questions/new}">新しい問題を作成</a>
+                <a class="createbutton" th:href = "@{/questions/new}" th:if="${!#lists.isEmpty(categories)}">新しい問題を作成</a>
             </div>
         </div>
     </main>

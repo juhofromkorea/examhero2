@@ -19,7 +19,7 @@
                 <a  th:href = "@{/dashboard}">ExamHero</a>
             </span>
             <span >
-                <a class="logoutbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
+                <a class="createbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
             </span>
         </div>
     </header>
@@ -28,17 +28,15 @@
             <div class="page-card">
                 <h1>問題カード一覧</h1>
                 <p>作成した問題の一覧です。</p>
-                <div class="message">
-                    <div class="success-message" th:if="${successMessage}" th:text ="${successMessage}">
-                        問題カード作成成功！
-                    </div>
-                    <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-                </div>    
-                <div class="empty-message" th:if="${#lists.isEmpty(questionCards)}">
-                    まだ問題カードがありません。まずは「新しい問題カードを作成」から1問登録してみましょう。
+                <div class="success-message" th:if="${successMessage}" th:text ="${successMessage}">
+                    問題カード作成成功！
+                </div>
+                <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+                <div class="empty-message" th:if="${#lists.isEmpty(categories)}">
+                    まだカテゴリがありません。まずは「新しいカテゴリを作成」から1問登録してみましょう。
                 </div>
                 <br>
-                <table class="category-table">
+                <table class="category-table" th:if="${!#lists.isEmpty(questionCards)}">
                     <thead>
                         <tr>
                             <th>カテゴリ</th>
@@ -61,17 +59,17 @@
                             </td>
                             <td th:text = "${#temporals.format(questionCard.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
                             <td>
-                                <div class="question-actions">
-                                    <a th:href="@{/questions/{id}(id=${questionCard.id})}" class="secondary-button">詳細</a>
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 2px; flex-wrap: wrap;">
+                                    <a th:href="@{/questions/{id}(id=${questionCard.id})}" class="createbutton">詳細</a>
 
-                                    <a th:href="@{/questions/{id}/edit(id=${questionCard.id})}" class="secondary-button">編集</a>
+                                    <a th:href="@{/questions/{id}/edit(id=${questionCard.id})}" class="createbutton">編集</a>
 
                                     <form th:action="@{/questions/{id}/delete(id=${questionCard.id})}"
                                         method="post"
                                         class="inline-form"
                                         onsubmit="return confirm('この問題を削除しますか？');">
                                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                        <button type="submit" class="danger-button">削除</button>
+                                        <button type="submit" class="createbutton">削除</button>
                                     </form>
                                 </div>
                             </td>
@@ -79,12 +77,11 @@
                     </tbody>
                 </table>
                 <br>
-                <a class="createbutton" th:href = "@{/questions/new}">新しい問題を作成</a>
-                <a class="createbutton" 
-                    th:each="category : ${categories}"
-                    th:href="@{/questions/categories/{id}/select(id=${category.id})}"
-                >
-                </a>
+                <div style="display: flex; margin-right: 12px; align-items: center; gap: 16px; flex-wrap: wrap;">
+                    <a class="createbutton" th:href = "@{/questions/new}" th:if="${!#lists.isEmpty(categories)}">新しい問題を作成</a>
+                    <a class="createbutton" th:href = "@{/categories/new}" th:if="${#lists.isEmpty(categories)}">新しいカテゴリを作成</a>
+                    <a class="cancel" th:href = "@{/dashboard}">キャンセル</a>
+                </div>
             </div>
         </div>
     </main>
