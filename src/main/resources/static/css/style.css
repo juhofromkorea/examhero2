@@ -232,12 +232,35 @@ section {
     font-weight: 700;
 }
 
-.createbutton{
+.center{
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* ボタン間の余白 */
+}
+
+.loginbutton{
     display: inline-block;
     padding: 13px 18px;
     color:#ffffff;
     background-color: #2563eb;
     width: 100%;
+    font-size:16px;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration:none;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.24);
+    border: none;
+    cursor: pointer;
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.createbutton{
+    display: inline-block;
+    padding: 13px 18px;
+    color:#ffffff;
+    background-color: #2563eb;
     font-size:16px;
     font-weight: 700;
     border-radius: 12px;
