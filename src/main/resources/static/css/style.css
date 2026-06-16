@@ -36,7 +36,8 @@ h3 {
     color: #2563eb;
     font-size: 45px;
     text-align: center;
-    font-weight: bold;
+    font-family:Times New Roman, serif;
+    font-weight: 900;
 }
 
 .header-container {
@@ -206,8 +207,8 @@ section {
     background: #2563eb;
     border-radius: 12px;
     border:none;
-    font-weight: 600;      
-    text-decoration: none;       
+    font-weight: 600;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -236,6 +237,7 @@ section {
     padding: 13px 18px;
     color:#ffffff;
     background-color: #2563eb;
+    width: 100%;
     font-size:16px;
     font-weight: 700;
     border-radius: 12px;
