@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+    Thymeleaf を使うために xmlns:th を指定します。
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--
+        スマートフォンでも見やすくするための設定です。
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カテゴリ作成-ExamHero</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class = "header-container">
+            <span class = "header-logo">
+                <a  th:href = "@{/dashboard}">ExamHero</a>
+            </span>
+
+            <span >
+                <a class="createbutton" th:href ="@{/dashboard}">ダッシュボードへ</a>
+            </span>
+        </div>
+    </header>
+    <main>
+        <div class = "page-container">
+            <div class="page-card">
+                <h1 th:text = "${category.name}"></h1>
+                <p>解きたい問題番号を選んでください。</p>
+                <div class="empty-message" th:if="${#lists.isEmpty(questionCards)}">
+                    このカテゴリにはまだ問題カードがありません。
+                </div>
+                <div class="select-question"
+                    th:if="${!#lists.isEmpty(questionCards)}"
+                    style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px;"
+                >
+                    <a
+                        th:each="questionCard, stat : ${questionCards}"
+                        th:href="@{/questions/{id}/solve(id=${questionCard.id})}"
+                        class="question-select-button"
+                        style="min-width: 50px; text-align: center;"
+                    >
+                        <span th:text="${stat.count}">1</span>
+                    </a>
+
+                </div>
+                <br>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a th:href="@{/questions/new}" class="createbutton">
+                        問題を登録する
+                    </a>
+
+                    <a th:href="@{/dashboard}" class="createbutton">
+                        ダッシュボードへ戻る
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

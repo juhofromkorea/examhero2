@@ -19,7 +19,10 @@
                 <a th:href = "@{/dashboard}">ExamHero</a>
             </span>
 
-            <span class="dash-header">ダッシュボード</span>
+            <span class="toptitle">
+                今やらなきゃいつやるの？
+                今っきゃない
+            </span>
 
             <form th:action = "@{/logout}" method = "post">
                 <input
@@ -27,34 +30,71 @@
                     th:name="${_csrf.parameterName}"
                     th:value="${_csrf.token}"
                 >
-                <button type = "submit" class="logoutbutton">
+                <button type = "submit" class="createbutton">
                     ログアウト
                 </button>
             </form>
     </header>
-    <main>
-        <div class="toptitle">
-            <h1>
-                今やらなきゃいつやるの？
-                今っきゃない
-            </h1>
-        </div>
-        <div>
-            <p>試験カテゴリ</p>
-        </div>
+    <main class="dashboard-main">
+        <div class="dashboard-content">
+            <div class="dashboard-title">
+                <h1 class="dashboard-title-heading">ダッシュボード</h1>
 
-        <div>
-            <p>問題カード</p>
+                <div class="dashboard-user-message">
+                    <p>
+                        <span th:text="${loginUsername}">ユーザー名</span>さん
+                    </p>
+                    <p>お疲れ様でした！</p>
+                </div>
+            </div>
+            <section class="dashboard-stats">
+                <div class="dashboard-stat-card">
+                    <p class="dashboard-stat-label">試験カテゴリ</p>
+                    <p class="dashboard-stat-number" th:text="${categoryCount}">0</p>
+                    <p class="dashboard-stat-text">登録済みのカテゴリ数です</p>
+                </div>
+                <div class="dashboard-stat-card">
+                    <p class="dashboard-stat-label">問題カード</p>
+                    <p class="dashboard-stat-number" th:text="${questionCount}">0</p>
+                    <p class="dashboard-stat-text">登録した問題カードの合計数です。</p>
+                </div>
+                <div class="dashboard-stat-card">
+                    <p class="dashboard-stat-label">今日解いた問題</p>
+                    <p class="dashboard-stat-number" th:text="${todayReviewCount}">0</p>
+                    <p class="dashboard-stat-text">今日解答した問題数です。</p>
+                </div>
+            </section>
+            <div class="dashboard-action-section">
+                <div class="dashboard-action-header">
+                    <h2>問題演習</h2>
+                    <div class="dashboard-action-buttons">
+                        <a class="createbutton" th:href="@{/categories}">カテゴリ管理</a>
+                        <a class="createbutton" th:href="@{/questions/new}">問題を登録</a>
+                    </div>
+                </div>
+                <div class="content-card" th:if="${#lists.isEmpty(categories)}">
+                    <p class="empty-message">
+                        まだ試験カテゴリがありません。まずはカテゴリを作成してください。
+                    </p>
+                    <a class="createbutton" th:href="@{/categories/new}">
+                        カテゴリを作成する
+                    </a>
+                </div>
+                <div class="dashboard-category-list" th:if="${!#lists.isEmpty(categories)}">
+                    <a class="dashboard-category-row"
+                    th:each="category : ${categories}"
+                    th:href="@{/questions/categories/{id}/select(id=${category.id})}">
+                        <span class="dashboard-category-name" th:text="${category.name}">
+                            AWS SAA
+                        </span>
+                        <span class="dashboard-category-count">
+                            問題数 
+                            <span th:text="${questionCountMap[category.id]}">0</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <p>今日解いた問題</p>
-        </div>
-
-        <h2>学習カテゴリ</h2>
-        <a class="createbutton" th:href = "@{/categories}">カテゴリ管理</a>
-        <a class="createbutton" th:href = "@{/questions/new}">問題を登録</a>
-        <a class="createbutton" th:href = "@{/categories/new}">カテゴリを作成する</a>
     </main>
 </body>
 </html>
